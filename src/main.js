@@ -9,11 +9,11 @@ import '@/styles/common.scss'
 
 
 // 测试接口函数
-import { getCategory } from './apis/testAPI'
+// import { getCategory } from './apis/testAPI'
 
-getCategory().then(res => {
-    console.log(res)
-})
+// getCategory().then(res => {
+//     console.log(res)
+// })
 
 const app = createApp(App)
 
