@@ -2,24 +2,15 @@
 // import LayoutHeaderUl from './LayoutHeaderUl.vue'
 // vueUse useScroll: 获取当前页面滚动了多少
 import { useScroll } from '@vueuse/core'
-import { getCategoryApi } from '@/apis/layout'
-import { onMounted, ref } from 'vue';
+import { useCategoryStore } from '@/stores/category';
 // 封装请求
 
 // 纵向滚动的距离
 const { y } = useScroll(window)
 
 // 使用pinia中的数据
-const categoryList = ref([])
-const getCategory = async () => {
-    const res = await getCategoryApi()
-    console.log(res);
-    categoryList.value = res.result
-}
+const categoryStore = useCategoryStore()
 
-onMounted(() => {
-    getCategory()
-})
 
 </script>
 
@@ -28,7 +19,7 @@ onMounted(() => {
         <div class="container">
             <RouterLink class="logo" to="/" />
             <ul class="app-header-nav">
-                <li class="home" v-for="item in categoryList" :key="item.id">
+                <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
                     <RouterLink to="/">{{ item.name }}</RouterLink>
                 </li>
             </ul>
