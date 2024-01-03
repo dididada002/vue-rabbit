@@ -1,7 +1,6 @@
-<<<<<<< Updated upstream
-<template>
+<!-- <template>
     <div style="height: 1200px;">我是home页</div>
-=======
+</template> -->
 <!-- <template>
     <div>我是home页</div>
 </template> -->
@@ -15,5 +14,4 @@ const msg = ref('Hello World!')
 <template>
   <h1>{{ msg }}</h1>
   <input v-model="msg">
->>>>>>> Stashed changes
 </template>
