@@ -3,6 +3,7 @@
 // vueUse useScroll: 获取当前页面滚动了多少
 import { useScroll } from '@vueuse/core'
 import { useCategoryStore } from '@/stores/category';
+import { RouterLink } from 'vue-router';
 // 封装请求
 
 // 纵向滚动的距离
@@ -20,7 +21,7 @@ const categoryStore = useCategoryStore()
             <RouterLink class="logo" to="/" />
             <ul class="app-header-nav">
                 <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
-                    <RouterLink to="/">{{ item.name }}</RouterLink>
+                    <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
                 </li>
             </ul>
             <div class="search">
