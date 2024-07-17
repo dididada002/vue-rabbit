@@ -1,5 +1,18 @@
 <script setup>
+import { getCategoryFilterAPI } from '@/apis/category';
+import { onMounted } from 'vue';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+//获取面包屑导航数据
+const categoryData = ref({})
+const route = useRoute()
+
+const getcategoryData = async () => {
+    const res = await getCategoryFilterAPI(route.params.id)
+    categoryData.value = res.result
+}
+onMounted(() => getcategoryData())
 
 </script>
 
