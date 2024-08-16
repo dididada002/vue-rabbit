@@ -1,18 +1,42 @@
-```vue
 <script setup>
+
+import { getDetail } from '@/apis/detail';
+import { onMounted } from 'vue';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const goods = ref({})
+const route = useRoute()
+const getGoods = async () => {
+    const res = await getDetail(route.params.id)
+    goods.value = res.result
+}
+onMounted(() => getGoods())
 
 
 </script>
 
 <template>
     <div class="xtx-goods-page">
-        <div class="container">
+        <div class="container" v-if="goods.details">
             <div class="bread-container">
                 <el-breadcrumb separator=">">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: '/' }">母婴
+                    <!-- 
+                        此处注意一个错误：在接口请求完成之前，goods是一个空对象
+                        解决方案：
+                        1、使用可选链的语法 ?.
+                        2、使用v-if手动控制渲染时机
+                     -->
+                     <!-- 可选链 -->
+                    <!-- <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">{{ goods.categories?.[1].name }}
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
+                    <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">{{ goods.categories?.[0].name }}
+                    </el-breadcrumb-item> -->
+                    <!-- v-if -->
+                    <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name }}
+                    </el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0].id}` }">{{ goods.categories[0].name }}
                     </el-breadcrumb-item>
                     <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
                 </el-breadcrumb>
@@ -28,22 +52,22 @@
                             <ul class="goods-sales">
                                 <li>
                                     <p>销量人气</p>
-                                    <p> 100+ </p>
+                                    <p> {{ goods.salesCount }} </p>
                                     <p><i class="iconfont icon-task-filling"></i>销量人气</p>
                                 </li>
                                 <li>
                                     <p>商品评价</p>
-                                    <p>200+</p>
+                                    <p>{{ goods.commentCount }}</p>
                                     <p><i class="iconfont icon-comment-filling"></i>查看评价</p>
                                 </li>
                                 <li>
                                     <p>收藏人气</p>
-                                    <p>300+</p>
+                                    <p>{{ goods.collectCount }}</p>
                                     <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
                                 </li>
                                 <li>
                                     <p>品牌信息</p>
-                                    <p>400+</p>
+                                    <p>{{ goods.brand.name }}</p>
                                     <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                                 </li>
                             </ul>
